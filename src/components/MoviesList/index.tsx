@@ -1,9 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Movie } from '../../models/Movie';
 import MovieCard from '../MovieCard';
 
-// import { Container } from './styles';
+import { StyledFlatList } from './styles';
 
 type Props = {
   movies: Movie[];
@@ -11,11 +10,11 @@ type Props = {
 
 const MoviesList: React.FC<Props> = ({ movies }) => {
   return (
-    <View>
-      {movies.map((movie) => (
-        <MovieCard movie={movie} key={movie.imdbID} />
-      ))}
-    </View>
+    <StyledFlatList
+      data={movies}
+      keyExtractor={(movie) => movie.imdbID}
+      renderItem={({ item: movie }) => <MovieCard movie={movie} />}
+    />
   );
 };
 
