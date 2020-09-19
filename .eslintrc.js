@@ -8,6 +8,8 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/react',
   ],
   globals: {
     Atomics: 'readonly',
@@ -58,7 +60,7 @@ module.exports = {
     'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false}],
     'no-use-before-define': [0],
     '@typescript-eslint/no-use-before-define': [1],
-  },
+},
   settings: {
     'import/resolver': {
       typescript: {},
