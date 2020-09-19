@@ -1,9 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { colors } from '../styles';
+
+import MoviesSearch from '../pages/MoviesSearch';
+import Favorites from '../pages/Favorites';
 
 const TabNavigator = createBottomTabNavigator();
 
@@ -15,12 +18,12 @@ const AppRouter: React.FC = () => {
           paddingBottom: 6,
           fontSize: 12,
         },
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        activeTintColor: colors.primary,
+        inactiveTintColor: colors.inactive,
       }}>
       <TabNavigator.Screen
-        name="Movies"
-        component={() => <Text>Movies</Text>}
+        name="MoviesSearch"
+        component={MoviesSearch}
         options={{
           title: 'Filmes',
           tabBarIcon: (props) => <Ionicons name="videocam" {...props} />,
@@ -28,7 +31,7 @@ const AppRouter: React.FC = () => {
       />
       <TabNavigator.Screen
         name="Favorites"
-        component={() => <Text>Favorites</Text>}
+        component={Favorites}
         options={{
           title: 'Favoritos',
           tabBarIcon: (props) => <Ionicons name="star" {...props} />,
