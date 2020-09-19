@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
 
-export type RootReducer = {};
+export type RootReducer = {
+  example: () => {};
+};
 
-export default combineReducers({});
+export default combineReducers({
+  example: () => ({}),
+});

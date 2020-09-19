@@ -9,9 +9,11 @@ const colors = {
   success: '#1EB841',
   warning: '#FFCB12',
   inactive: '#999999',
+  active: '#ff2222',
 
   // neutral
   lightText: '#EDEDED',
+  darkText: '#5c5c5c',
   white: '#FFFDFD',
   black: '#000',
 };
