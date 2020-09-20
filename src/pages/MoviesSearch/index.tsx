@@ -1,98 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { Header, MoviesList } from '../../components';
 import { searchMovie } from '../../services/movies';
 import { Movie } from '../../models/Movie';
 
-import { SearchContainer, Button, Input } from './styles';
-
-const MOVIES_MOCK = [
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
-    Title: 'Batman Begins',
-    Type: 'movie',
-    Year: '2005',
-    imdbID: 'tt0372784',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BYThjYzcyYzItNTVjNy00NDk0LTgwMWQtYjMwNmNlNWJhMzMyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
-    Title: 'Batman v Superman: Dawn of Justice',
-    Type: 'movie',
-    Year: '2016',
-    imdbID: 'tt2975590',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BMTYwNjAyODIyMF5BMl5BanBnXkFtZTYwNDMwMDk2._V1_SX300.jpg',
-    Title: 'Batman',
-    Type: 'movie',
-    Year: '1989',
-    imdbID: 'tt0096895',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BOGZmYzVkMmItM2NiOS00MDI3LWI4ZWQtMTg0YWZkODRkMmViXkEyXkFqcGdeQXVyODY0NzcxNw@@._V1_SX300.jpg',
-    Title: 'Batman Returns',
-    Type: 'movie',
-    Year: '1992',
-    imdbID: 'tt0103776',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BNDdjYmFiYWEtYzBhZS00YTZkLWFlODgtY2I5MDE0NzZmMDljXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
-    Title: 'Batman Forever',
-    Type: 'movie',
-    Year: '1995',
-    imdbID: 'tt0112462',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BMGQ5YTM1NmMtYmIxYy00N2VmLWJhZTYtN2EwYTY3MWFhOTczXkEyXkFqcGdeQXVyNTA2NTI0MTY@._V1_SX300.jpg',
-    Title: 'Batman & Robin',
-    Type: 'movie',
-    Year: '1997',
-    imdbID: 'tt0118688',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BMTcyNTEyOTY0M15BMl5BanBnXkFtZTgwOTAyNzU3MDI@._V1_SX300.jpg',
-    Title: 'The Lego Batman Movie',
-    Type: 'movie',
-    Year: '2017',
-    imdbID: 'tt4116284',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BOTM3MTRkZjQtYjBkMy00YWE1LTkxOTQtNDQyNGY0YjYzNzAzXkEyXkFqcGdeQXVyOTgwMzk1MTA@._V1_SX300.jpg',
-    Title: 'Batman: The Animated Series',
-    Type: 'series',
-    Year: '1992–1995',
-    imdbID: 'tt0103359',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BNmY4ZDZjY2UtOWFiYy00MjhjLThmMjctOTQ2NjYxZGRjYmNlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg',
-    Title: 'Batman: Under the Red Hood',
-    Type: 'movie',
-    Year: '2010',
-    imdbID: 'tt1569923',
-  },
-  {
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BMzIxMDkxNDM2M15BMl5BanBnXkFtZTcwMDA5ODY1OQ@@._V1_SX300.jpg',
-    Title: 'Batman: The Dark Knight Returns, Part 1',
-    Type: 'movie',
-    Year: '2012',
-    imdbID: 'tt2313197',
-  },
-];
+import { SearchContainer, Button, Input, Loading, ErrorText } from './styles';
 
 const MoviesSearch: React.FC = () => {
-  const [loadedMovies, setLoadedMovies] = useState<Movie[]>(MOVIES_MOCK);
+  const [loadedMovies, setLoadedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [error, setError] = useState('');
 
   const searchMovieOnApi = useCallback(async (search: string) => {
     try {
@@ -102,15 +20,18 @@ const MoviesSearch: React.FC = () => {
         const movies = response.data.Search;
         setLoadedMovies(movies);
       }
-    } catch (error) {
-      console.log('error', error);
+    } catch (err) {
+      console.log('error', err);
+      setError(
+        'Ocorreu um erro ao carregar os filmes :(\nPor favor, tente novamente em instantes',
+      );
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    // searchMovieOnApi('batman');
+  const onChangeInput = useCallback((text: string) => {
+    setSearchText(text);
   }, []);
 
   return (
@@ -121,11 +42,23 @@ const MoviesSearch: React.FC = () => {
       />
       <MoviesList
         movies={loadedMovies}
+        emptyText="Não há filmes carregados ainda. Faça sua busca no campo acima."
         topComponent={
-          <SearchContainer>
-            <Input placeholder="Digite aqui sua busca" />
-            <Button title="Buscar" />
-          </SearchContainer>
+          <>
+            <SearchContainer>
+              <Input
+                placeholder="Digite aqui sua busca"
+                value={searchText}
+                onChangeText={onChangeInput}
+              />
+              <Button
+                title="Buscar"
+                onPress={() => searchMovieOnApi(searchText)}
+              />
+            </SearchContainer>
+            {!!error && <ErrorText>{error}</ErrorText>}
+            {loading && <Loading />}
+          </>
         }
       />
     </View>
