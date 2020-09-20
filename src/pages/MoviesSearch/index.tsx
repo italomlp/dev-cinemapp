@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { Header, MoviesList } from '../../components';
 import { searchMovie } from '../../services/movies';
 import { Movie } from '../../models/Movie';
@@ -35,7 +35,7 @@ const MoviesSearch: React.FC = () => {
   }, []);
 
   return (
-    <View>
+    <SafeAreaView>
       <Header
         title="Cinema App"
         description="Bem-vindo ao mundo espetacular do cinema"
@@ -61,7 +61,7 @@ const MoviesSearch: React.FC = () => {
           </>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
