@@ -43,6 +43,7 @@ const MoviesSearch: React.FC = () => {
       <MoviesList
         movies={loadedMovies}
         emptyText="Não há filmes carregados ainda. Faça sua busca no campo acima."
+        keyboardShouldPersistTaps="always"
         topComponent={
           <>
             <SearchContainer>
