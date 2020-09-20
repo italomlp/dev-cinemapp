@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
+import favorites, { StateType as FavoritesState } from './favorites/reducer';
+
 export type RootReducer = {
-  example: () => {};
+  favorites: FavoritesState;
 };
 
-export default combineReducers({
-  example: () => ({}),
+export default combineReducers<RootReducer>({
+  favorites,
 });

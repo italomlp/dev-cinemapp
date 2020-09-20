@@ -17,9 +17,10 @@ import {
 type Props = {
   movie: Movie;
   isFavorite?: boolean;
+  onClickFavorite: (movie: Movie) => unknown;
 };
 
-const MovieCard: React.FC<Props> = ({ movie, isFavorite }) => {
+const MovieCard: React.FC<Props> = ({ movie, isFavorite, onClickFavorite }) => {
   return (
     <Container>
       <ImageContainer>
@@ -30,7 +31,7 @@ const MovieCard: React.FC<Props> = ({ movie, isFavorite }) => {
         <Year>{movie.Year}</Year>
       </TextContainer>
       <FavoriteContainer>
-        <FavoriteButton>
+        <FavoriteButton onPress={() => onClickFavorite(movie)}>
           <FavoriteIcon name={isFavorite ? 'heart' : 'heart-outline'} />
         </FavoriteButton>
       </FavoriteContainer>
