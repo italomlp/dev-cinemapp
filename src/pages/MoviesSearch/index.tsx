@@ -4,7 +4,7 @@ import { Header, MoviesList } from '../../components';
 import { searchMovie } from '../../services/movies';
 import { Movie } from '../../models/Movie';
 
-// import { Container } from './styles';
+import { SearchContainer, Button, Input } from './styles';
 
 const MOVIES_MOCK = [
   {
@@ -119,7 +119,15 @@ const MoviesSearch: React.FC = () => {
         title="Cinema App"
         description="Bem-vindo ao mundo espetacular do cinema"
       />
-      <MoviesList movies={loadedMovies} />
+      <MoviesList
+        movies={loadedMovies}
+        topComponent={
+          <SearchContainer>
+            <Input placeholder="Digite aqui sua busca" />
+            <Button title="Buscar" />
+          </SearchContainer>
+        }
+      />
     </View>
   );
 };
